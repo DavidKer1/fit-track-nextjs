@@ -1,0 +1,6 @@
+.blur-2 {
+  filter: blur(2px);
+}
+.opacity-90 {
+  opacity: 0.8;
+}
