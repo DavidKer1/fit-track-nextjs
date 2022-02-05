@@ -39,7 +39,7 @@ const Hero = () => {
         size={70}
         weight="bold"
       >
-        Let's Go
+        FitTrack
       </Text>
       <div
         style={{

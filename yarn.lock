@@ -525,7 +525,7 @@
   "resolved" "https://registry.npmjs.org/apollo-server-errors/-/apollo-server-errors-3.3.1.tgz"
   "version" "3.3.1"
 
-"apollo-server-micro@3.6.2":
+"apollo-server-micro@^3.6.2":
   "integrity" "sha512-eRb/ei+O+WA7mJZP7VLL6XVf1uMX8O8lnTXsW8G1/henyqUlCJ5WjxmoaJcyF1+jDIyqoSIP0n7gqhiIf/j3Ww=="
   "resolved" "https://registry.npmjs.org/apollo-server-micro/-/apollo-server-micro-3.6.2.tgz"
   "version" "3.6.2"

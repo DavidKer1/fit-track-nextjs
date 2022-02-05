@@ -30,6 +30,7 @@
       "@/components/*": ["components/*"],
       "@/styles/*": ["styles/*"],
       "@/config/*": ["config/*"],
+      "@/types/*": ["types/*"],
     },
     "incremental": true
   },
