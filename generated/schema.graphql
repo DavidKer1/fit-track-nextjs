@@ -2,43 +2,91 @@
 ### Do not make changes to this file directly
 
 
+type Account {
+  access_token: String
+  expires_at: Int
+  id: String!
+  id_token: String
+  oauth_token: String
+  oauth_token_secret: String
+  provider: String!
+  providerAccountId: String!
+  refresh_token: String
+  scope: String
+  session_state: String
+  token_type: String
+  type: String!
+  user: User!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
 
+type Exercise {
+  category: ExerciseCategory!
+  exercisesWorkout: [ExerciseWorkout]
+  id: String!
+  name: String!
+  user: User!
+}
+
+type ExerciseCategory {
+  exercises: [Exercise]
+  id: String!
+  name: String!
+}
+
+type ExerciseWorkout {
+  exercise: Exercise!
+  id: String!
+  name: String!
+  sets: [Set]
+  workout: Workout!
+}
+
 type Mutation {
-  createDraft(authorEmail: String, content: String, title: String!): Post
-  deletePost(postId: String): Post
-  publish(postId: String): Post
-  signupUser(email: String!, name: String): User
-}
-
-type Post {
-  author: User
-  content: String
-  id: Int
-  published: Boolean
-  title: String
-}
-
-type Profile {
-  bio: String
-  id: Int!
-  user: User
+  deleteAccount(accountId: String): Account
 }
 
 type Query {
-  drafts: [Post]
-  feed: [Post]
-  filterPosts(searchString: String): [Post]
-  post(postId: String!): Post
+  user(userId: String!): User
+}
+
+type Session {
+  expires: DateTime!
+  id: String!
+  sessionToken: String!
+  user: User
+  userId: String!
+}
+
+type Set {
+  exerciseWorkout: ExerciseWorkout!
+  id: String!
+  name: String!
+  reps: Int!
+  weight: Int!
 }
 
 type User {
+  accounts: [Account]!
   email: String
-  id: Int
+  emailVerified: DateTime
+  exercises: [Exercise]
+  id: String!
+  image: String
   name: String
-  posts: [Post]
-  profile: Profile
+  sessions: [Session]
+  workouts: [Workout]
+}
+
+type Workout {
+  date: DateTime!
+  exercisesWorkout: [ExerciseWorkout]
+  finished: Boolean!
+  id: String!
+  name: String!
+  user: User!
 }

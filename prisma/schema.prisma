@@ -8,14 +8,13 @@ datasource db {
 }
 
 model Workout {
-  id        String     @id @default(cuid())
-  name      String
-  date      DateTime
-  finished  Boolean
-  userId    String
-  user      User       @relation(fields: [userId], references: [id])
-  exercises Exercise[]
-  Set       Set[]
+  id               String            @id @default(cuid())
+  name             String
+  date             DateTime
+  finished         Boolean
+  userId           String
+  user             User              @relation(fields: [userId], references: [id])
+  exercisesWorkout ExerciseWorkout[]
 }
 
 model ExerciseCategory {
@@ -25,15 +24,23 @@ model ExerciseCategory {
 }
 
 model Exercise {
-  id         String            @id @default(cuid())
+  id               String            @id @default(cuid())
+  name             String
+  categoryId       String
+  category         ExerciseCategory  @relation(fields: [categoryId], references: [id])
+  userId           String
+  user             User              @relation(fields: [userId], references: [id])
+  exercisesWorkout ExerciseWorkout[]
+}
+
+model ExerciseWorkout {
+  id         String   @id @default(cuid())
   name       String
-  userId     String
-  user       User              @relation(fields: [userId], references: [id])
-  categoryId String            @unique
-  category   ExerciseCategory? @relation(fields: [categoryId], references: [id])
-  Workout    Workout?          @relation(fields: [workoutId], references: [id])
+  workout    Workout? @relation(fields: [workoutId], references: [id])
   workoutId  String?
-  Set        Set[]
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  sets       Set[]
 }
 
 model Set {
@@ -42,10 +49,8 @@ model Set {
   reps   Int
   weight Int
 
-  exerciseId String
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  workoutId  String   @unique
-  workout    Workout  @relation(fields: [workoutId], references: [id])
+  exerciseWorkoutId String
+  exerciseWorkout   ExerciseWorkout @relation(fields: [exerciseWorkoutId], references: [id])
 }
 
 model Account {
@@ -83,10 +88,10 @@ model User {
   email         String?    @unique
   emailVerified DateTime?
   image         String?
-  Accounts      Account[]
-  Sessions      Session[]
-  Workouts      Workout[]
-  Exercise      Exercise[]
+  accounts      Account[]
+  sessions      Session[]
+  workouts      Workout[]
+  exercises     Exercise[]
 }
 
 model VerificationToken {

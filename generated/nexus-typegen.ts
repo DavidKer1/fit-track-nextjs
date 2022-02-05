@@ -43,22 +43,59 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Account: { // root type
+    access_token?: string | null; // String
+    expires_at?: number | null; // Int
+    id: string; // String!
+    id_token?: string | null; // String
+    oauth_token?: string | null; // String
+    oauth_token_secret?: string | null; // String
+    provider: string; // String!
+    providerAccountId: string; // String!
+    refresh_token?: string | null; // String
+    scope?: string | null; // String
+    session_state?: string | null; // String
+    token_type?: string | null; // String
+    type: string; // String!
+  }
+  Exercise: { // root type
+    id: string; // String!
+    name: string; // String!
+  }
+  ExerciseCategory: { // root type
+    id: string; // String!
+    name: string; // String!
+  }
+  ExerciseWorkout: { // root type
+    id: string; // String!
+    name: string; // String!
+  }
   Mutation: {};
-  Post: { // root type
-    content?: string | null; // String
-    id?: number | null; // Int
-    published?: boolean | null; // Boolean
-    title?: string | null; // String
-  }
-  Profile: { // root type
-    bio?: string | null; // String
-    id: number; // Int!
-  }
   Query: {};
+  Session: { // root type
+    expires: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // String!
+    sessionToken: string; // String!
+    userId: string; // String!
+  }
+  Set: { // root type
+    id: string; // String!
+    name: string; // String!
+    reps: number; // Int!
+    weight: number; // Int!
+  }
   User: { // root type
     email?: string | null; // String
-    id?: number | null; // Int
+    emailVerified?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string; // String!
+    image?: string | null; // String
     name?: string | null; // String
+  }
+  Workout: { // root type
+    date: NexusGenScalars['DateTime']; // DateTime!
+    finished: boolean; // Boolean!
+    id: string; // String!
+    name: string; // String!
   }
 }
 
@@ -73,97 +110,168 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Account: { // field return type
+    access_token: string | null; // String
+    expires_at: number | null; // Int
+    id: string; // String!
+    id_token: string | null; // String
+    oauth_token: string | null; // String
+    oauth_token_secret: string | null; // String
+    provider: string; // String!
+    providerAccountId: string; // String!
+    refresh_token: string | null; // String
+    scope: string | null; // String
+    session_state: string | null; // String
+    token_type: string | null; // String
+    type: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  Exercise: { // field return type
+    category: NexusGenRootTypes['ExerciseCategory']; // ExerciseCategory!
+    exercisesWorkout: Array<NexusGenRootTypes['ExerciseWorkout'] | null> | null; // [ExerciseWorkout]
+    id: string; // String!
+    name: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
+  ExerciseCategory: { // field return type
+    exercises: Array<NexusGenRootTypes['Exercise'] | null> | null; // [Exercise]
+    id: string; // String!
+    name: string; // String!
+  }
+  ExerciseWorkout: { // field return type
+    exercise: NexusGenRootTypes['Exercise']; // Exercise!
+    id: string; // String!
+    name: string; // String!
+    sets: Array<NexusGenRootTypes['Set'] | null> | null; // [Set]
+    workout: NexusGenRootTypes['Workout']; // Workout!
+  }
   Mutation: { // field return type
-    createDraft: NexusGenRootTypes['Post'] | null; // Post
-    deletePost: NexusGenRootTypes['Post'] | null; // Post
-    publish: NexusGenRootTypes['Post'] | null; // Post
-    signupUser: NexusGenRootTypes['User'] | null; // User
-  }
-  Post: { // field return type
-    author: NexusGenRootTypes['User'] | null; // User
-    content: string | null; // String
-    id: number | null; // Int
-    published: boolean | null; // Boolean
-    title: string | null; // String
-  }
-  Profile: { // field return type
-    bio: string | null; // String
-    id: number; // Int!
-    user: NexusGenRootTypes['User'] | null; // User
+    deleteAccount: NexusGenRootTypes['Account'] | null; // Account
   }
   Query: { // field return type
-    drafts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    feed: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    filterPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    post: NexusGenRootTypes['Post'] | null; // Post
+    user: NexusGenRootTypes['User'] | null; // User
+  }
+  Session: { // field return type
+    expires: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // String!
+    sessionToken: string; // String!
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: string; // String!
+  }
+  Set: { // field return type
+    exerciseWorkout: NexusGenRootTypes['ExerciseWorkout']; // ExerciseWorkout!
+    id: string; // String!
+    name: string; // String!
+    reps: number; // Int!
+    weight: number; // Int!
   }
   User: { // field return type
+    accounts: Array<NexusGenRootTypes['Account'] | null>; // [Account]!
     email: string | null; // String
-    id: number | null; // Int
+    emailVerified: NexusGenScalars['DateTime'] | null; // DateTime
+    exercises: Array<NexusGenRootTypes['Exercise'] | null> | null; // [Exercise]
+    id: string; // String!
+    image: string | null; // String
     name: string | null; // String
-    posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    profile: NexusGenRootTypes['Profile'] | null; // Profile
+    sessions: Array<NexusGenRootTypes['Session'] | null> | null; // [Session]
+    workouts: Array<NexusGenRootTypes['Workout'] | null> | null; // [Workout]
+  }
+  Workout: { // field return type
+    date: NexusGenScalars['DateTime']; // DateTime!
+    exercisesWorkout: Array<NexusGenRootTypes['ExerciseWorkout'] | null> | null; // [ExerciseWorkout]
+    finished: boolean; // Boolean!
+    id: string; // String!
+    name: string; // String!
+    user: NexusGenRootTypes['User']; // User!
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Mutation: { // field return type name
-    createDraft: 'Post'
-    deletePost: 'Post'
-    publish: 'Post'
-    signupUser: 'User'
-  }
-  Post: { // field return type name
-    author: 'User'
-    content: 'String'
-    id: 'Int'
-    published: 'Boolean'
-    title: 'String'
-  }
-  Profile: { // field return type name
-    bio: 'String'
-    id: 'Int'
+  Account: { // field return type name
+    access_token: 'String'
+    expires_at: 'Int'
+    id: 'String'
+    id_token: 'String'
+    oauth_token: 'String'
+    oauth_token_secret: 'String'
+    provider: 'String'
+    providerAccountId: 'String'
+    refresh_token: 'String'
+    scope: 'String'
+    session_state: 'String'
+    token_type: 'String'
+    type: 'String'
     user: 'User'
   }
+  Exercise: { // field return type name
+    category: 'ExerciseCategory'
+    exercisesWorkout: 'ExerciseWorkout'
+    id: 'String'
+    name: 'String'
+    user: 'User'
+  }
+  ExerciseCategory: { // field return type name
+    exercises: 'Exercise'
+    id: 'String'
+    name: 'String'
+  }
+  ExerciseWorkout: { // field return type name
+    exercise: 'Exercise'
+    id: 'String'
+    name: 'String'
+    sets: 'Set'
+    workout: 'Workout'
+  }
+  Mutation: { // field return type name
+    deleteAccount: 'Account'
+  }
   Query: { // field return type name
-    drafts: 'Post'
-    feed: 'Post'
-    filterPosts: 'Post'
-    post: 'Post'
+    user: 'User'
+  }
+  Session: { // field return type name
+    expires: 'DateTime'
+    id: 'String'
+    sessionToken: 'String'
+    user: 'User'
+    userId: 'String'
+  }
+  Set: { // field return type name
+    exerciseWorkout: 'ExerciseWorkout'
+    id: 'String'
+    name: 'String'
+    reps: 'Int'
+    weight: 'Int'
   }
   User: { // field return type name
+    accounts: 'Account'
     email: 'String'
-    id: 'Int'
+    emailVerified: 'DateTime'
+    exercises: 'Exercise'
+    id: 'String'
+    image: 'String'
     name: 'String'
-    posts: 'Post'
-    profile: 'Profile'
+    sessions: 'Session'
+    workouts: 'Workout'
+  }
+  Workout: { // field return type name
+    date: 'DateTime'
+    exercisesWorkout: 'ExerciseWorkout'
+    finished: 'Boolean'
+    id: 'String'
+    name: 'String'
+    user: 'User'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createDraft: { // args
-      authorEmail?: string | null; // String
-      content?: string | null; // String
-      title: string; // String!
-    }
-    deletePost: { // args
-      postId?: string | null; // String
-    }
-    publish: { // args
-      postId?: string | null; // String
-    }
-    signupUser: { // args
-      email: string; // String!
-      name?: string | null; // String
+    deleteAccount: { // args
+      accountId?: string | null; // String
     }
   }
   Query: {
-    filterPosts: { // args
-      searchString?: string | null; // String
-    }
-    post: { // args
-      postId: string; // String!
+    user: { // args
+      userId: string; // String!
     }
   }
 }
