@@ -1,42 +1,39 @@
-import { Button, Text, useTheme } from "@nextui-org/react"
+import { Button, Container, Grid, Text, useTheme } from "@nextui-org/react"
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/react"
 
 import type { FC } from "react"
+import Logo from "@/components/Logo"
 const Navbar: FC = () => {
   const { theme } = useTheme()
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        backgroundColor: theme.colors.white.value,
+    <Grid.Container
+      justify="space-between"
+      css={{
         padding: `${theme.space.xs} ${theme.space.sm}`,
         alignItems: "center",
+        display: "none",
+        '@mdMax': {
+          display: "flex",
+        },
       }}
     >
-      <Text
-        css={{
-          textGradient: "45deg, $purple500 -20%, $pink500 100%",
-        }}
-        weight={"bold"}
-        h2
-      >
-        <Link href="/">
-          <a>FitTrack</a>
-        </Link>
-      </Text>
-      <Button
-        onClick={() => {
-          signOut({ callbackUrl: "http://localhost:3000/login" })
-        }}
-        color={"primary"}
-        size={"sm"}
-        light
-      >
-        Sign Out
-      </Button>
-    </div>
+      <Grid>
+        <Logo />
+      </Grid>
+      <Grid>
+        <Button
+          onClick={() => {
+            signOut({ callbackUrl: "http://localhost:3000/login" })
+          }}
+          color={"primary"}
+          size={"sm"}
+          light
+        >
+          Sign Out
+        </Button>
+      </Grid>
+    </Grid.Container>
   )
 }
 

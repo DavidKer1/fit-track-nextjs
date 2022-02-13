@@ -6,6 +6,7 @@ import type { AppProps } from "next/app"
 import { NextUIProvider } from "@nextui-org/react"
 import { useRouter } from "next/router"
 import theme from "config/theme"
+import '@/styles/global.css'
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: "/api",
@@ -26,17 +27,19 @@ function MyApp({
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page)
   return (
-    <SessionProvider session={session}>
-      <ApolloProvider client={client}>
-        <NextUIProvider theme={theme}>
-          {Component.auth ? (
-            <Auth>{getLayout(<Component {...pageProps} />)}</Auth>
-          ) : (
-            getLayout(<Component {...pageProps} />)
-          )}
-        </NextUIProvider>
-      </ApolloProvider>
-    </SessionProvider>
+    <>
+      <SessionProvider session={session}>
+        <ApolloProvider client={client}>
+          <NextUIProvider theme={theme}>
+            {Component.auth ? (
+              <Auth>{getLayout(<Component {...pageProps} />)}</Auth>
+            ) : (
+              getLayout(<Component {...pageProps} />)
+            )}
+          </NextUIProvider>
+        </ApolloProvider>
+      </SessionProvider>
+    </>
   )
 }
 

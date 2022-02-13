@@ -11,9 +11,9 @@ model Workout {
   id               String            @id @default(cuid())
   name             String
   date             DateTime
-  finished         Boolean
+  finished          Boolean
   userId           String
-  user             User              @relation(fields: [userId], references: [id])
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   exercisesWorkout ExerciseWorkout[]
 }
 
@@ -26,20 +26,20 @@ model ExerciseCategory {
 model Exercise {
   id               String            @id @default(cuid())
   name             String
-  categoryId       String
-  category         ExerciseCategory  @relation(fields: [categoryId], references: [id])
+  categoryId       String?
+  category         ExerciseCategory?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   userId           String
-  user             User              @relation(fields: [userId], references: [id])
+  user             User              @relation(fields: [userId], references: [id], onDelete: SetDefault)
   exercisesWorkout ExerciseWorkout[]
 }
 
 model ExerciseWorkout {
   id         String   @id @default(cuid())
   name       String
-  workout    Workout? @relation(fields: [workoutId], references: [id])
+  workout    Workout? @relation(fields: [workoutId], references: [id], onDelete: SetNull)
   workoutId  String?
   exerciseId String
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sets       Set[]
 }
 
@@ -50,7 +50,7 @@ model Set {
   weight Int
 
   exerciseWorkoutId String
-  exerciseWorkout   ExerciseWorkout @relation(fields: [exerciseWorkoutId], references: [id])
+  exerciseWorkout   ExerciseWorkout @relation(fields: [exerciseWorkoutId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
 
 model Account {
@@ -85,7 +85,7 @@ model Session {
 model User {
   id            String     @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]

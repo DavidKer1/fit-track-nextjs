@@ -4,6 +4,7 @@
  */
 
 
+import type { Context as ContextModule } from "./../api/context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -127,7 +128,7 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Exercise: { // field return type
-    category: NexusGenRootTypes['ExerciseCategory']; // ExerciseCategory!
+    category: NexusGenRootTypes['ExerciseCategory'] | null; // ExerciseCategory
     exercisesWorkout: Array<NexusGenRootTypes['ExerciseWorkout'] | null> | null; // [ExerciseWorkout]
     id: string; // String!
     name: string; // String!
@@ -143,12 +144,14 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     name: string; // String!
     sets: Array<NexusGenRootTypes['Set'] | null> | null; // [Set]
-    workout: NexusGenRootTypes['Workout']; // Workout!
+    workout: NexusGenRootTypes['Workout'] | null; // Workout
   }
   Mutation: { // field return type
-    deleteAccount: NexusGenRootTypes['Account'] | null; // Account
+    createCategory: NexusGenRootTypes['ExerciseCategory'] | null; // ExerciseCategory
+    createExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
   }
   Query: { // field return type
+    exercises: Array<NexusGenRootTypes['Exercise'] | null> | null; // [Exercise]
     user: NexusGenRootTypes['User'] | null; // User
   }
   Session: { // field return type
@@ -223,9 +226,11 @@ export interface NexusGenFieldTypeNames {
     workout: 'Workout'
   }
   Mutation: { // field return type name
-    deleteAccount: 'Account'
+    createCategory: 'ExerciseCategory'
+    createExercise: 'Exercise'
   }
   Query: { // field return type name
+    exercises: 'Exercise'
     user: 'User'
   }
   Session: { // field return type name
@@ -265,8 +270,13 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    deleteAccount: { // args
-      accountId?: string | null; // String
+    createCategory: { // args
+      name: string; // String!
+    }
+    createExercise: { // args
+      categoryId: string; // String!
+      name: string; // String!
+      userId: string; // String!
     }
   }
   Query: {
@@ -307,7 +317,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: ContextModule;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;

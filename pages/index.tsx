@@ -1,7 +1,7 @@
 import WorkoutChart from "@/components/Workout/WorkoutChart"
 import MainLayout from "@/layouts/MainLayout"
 import { NextPage } from "@/types/NextPage"
-import { Button, Col, Container, Row, Text } from "@nextui-org/react"
+import { Button, Col, Container, Row, Text, theme } from "@nextui-org/react"
 import { signOut, useSession } from "next-auth/react"
 import Head from "next/head"
 import Link from "next/link"
@@ -10,30 +10,28 @@ const Home: NextPage = () => {
 
   return (
     <>
-    <Head>
-      <title>Dashboard | FitTrack</title>
-    </Head>
-    <Container>
-      <Row align="center">
-        <Col>
-          <Text color={"primary"} h3 size={45} weight={"medium"}>
-            Dashboard
-          </Text>
-        </Col>
-        <Col css={{ justifyContent: "flex-end", display: "flex" }}>
-          <Link passHref href="/workout">
-            <Button color={"secondary"} auto>
-              New Workout
-            </Button>
-          </Link>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <WorkoutChart />
-        </Col>
-      </Row>
-    </Container>
+      <Head>
+        <title>Dashboard | FitTrack</title>
+      </Head>
+      <Container fluid>
+        <Row align="center">
+          <Col>
+            <Text color={"primary"} h3 size={36} weight={"bold"}>
+              Dashboard
+            </Text>
+          </Col>
+          <Col css={{ justifyContent: "flex-end", display: "flex" }}>
+            <Link passHref href="/workout">
+              <Button auto>New Workout</Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <WorkoutChart />
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

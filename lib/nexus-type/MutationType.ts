@@ -1,17 +1,45 @@
-import { objectType, stringArg } from "nexus"
+import { nonNull, objectType, stringArg } from "nexus"
 import prisma from "../prisma"
 
 const Mutation = objectType({
   name: "Mutation",
   definition(t) {
-    t.nullable.field('deleteAccount', {
-      type: 'Account',
+    t.field("createCategory", {
+      type: "ExerciseCategory",
       args: {
-        accountId: stringArg(),
+        name: nonNull(stringArg()),
       },
-      resolve: (_, { accountId }, ctx) => {
-        return prisma.account.delete({
-          where: { id: String(accountId) },
+      resolve: (_, { name }, ctx) => {
+        return prisma.exerciseCategory.create({
+          data: {
+            name: name,
+          },
+        })
+      },
+    })
+
+    t.field("createExercise", {
+      type: "Exercise",
+      args: {
+        userId: nonNull(stringArg()),
+        name: nonNull(stringArg()),
+        categoryId: nonNull(stringArg()),
+      },
+      resolve: (_, { name, categoryId, userId }) => {
+        return prisma.exercise.create({
+          data: {
+            name: name,
+            category: {
+              connect: {
+                id: categoryId,
+              },
+            },
+            user: {
+              connect: {
+                id: userId,
+              }
+            }
+          },
         })
       },
     })

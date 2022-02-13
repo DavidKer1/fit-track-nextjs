@@ -1,8 +1,7 @@
-import { nonNull, objectType, stringArg } from "nexus"
+import { nonNull, objectType, stringArg, queryType } from "nexus"
 import prisma from "../prisma"
 
-const Query = objectType({
-  name: "Query",
+const Query = queryType({
   definition(t) {
     t.field("user", {
       type: "User",
@@ -15,8 +14,18 @@ const Query = objectType({
         })
       },
     })
+
+    t.list.field("exercises", {
+      type: "Exercise",
+      resolve: (_, _args, ctx) => {
+        return prisma.user
+          .findUnique({
+            where: { email: ctx.session.user.email},
+          })
+          .exercises()
+      },
+    })
   },
 })
-
 
 export default Query

@@ -7,7 +7,7 @@ const ExerciseWorkout = objectType({
   definition(t) {
     t.nonNull.string("id")
     t.nonNull.string("name")
-    t.nonNull.field("workout", {
+    t.field("workout", {
       type: "Workout",
       resolve: parent => {
         return prisma.exerciseWorkout
