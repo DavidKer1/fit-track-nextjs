@@ -97,7 +97,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const token = await req.headers.authorization
 
   const apolloServerHandler = await getApolloServerHandler()
-
   if (req.method === "OPTIONS") {
     res.end()
     return

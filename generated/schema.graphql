@@ -26,6 +26,7 @@ scalar DateTime
 
 type Exercise {
   category: ExerciseCategory
+  createdAt: DateTime!
   exercisesWorkout: [ExerciseWorkout]
   id: String!
   name: String!
@@ -48,10 +49,11 @@ type ExerciseWorkout {
 
 type Mutation {
   createCategory(name: String!): ExerciseCategory
-  createExercise(categoryId: String!, name: String!, userId: String!): Exercise
+  createExercise(categoryId: String!, name: String!): Exercise
 }
 
 type Query {
+  categories: [ExerciseCategory]
   exercises: [Exercise]
   user(userId: String!): User
 }

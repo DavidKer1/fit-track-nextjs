@@ -60,6 +60,7 @@ export interface NexusGenObjects {
     type: string; // String!
   }
   Exercise: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     name: string; // String!
   }
@@ -129,6 +130,7 @@ export interface NexusGenFieldTypes {
   }
   Exercise: { // field return type
     category: NexusGenRootTypes['ExerciseCategory'] | null; // ExerciseCategory
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     exercisesWorkout: Array<NexusGenRootTypes['ExerciseWorkout'] | null> | null; // [ExerciseWorkout]
     id: string; // String!
     name: string; // String!
@@ -151,6 +153,7 @@ export interface NexusGenFieldTypes {
     createExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
   }
   Query: { // field return type
+    categories: Array<NexusGenRootTypes['ExerciseCategory'] | null> | null; // [ExerciseCategory]
     exercises: Array<NexusGenRootTypes['Exercise'] | null> | null; // [Exercise]
     user: NexusGenRootTypes['User'] | null; // User
   }
@@ -208,6 +211,7 @@ export interface NexusGenFieldTypeNames {
   }
   Exercise: { // field return type name
     category: 'ExerciseCategory'
+    createdAt: 'DateTime'
     exercisesWorkout: 'ExerciseWorkout'
     id: 'String'
     name: 'String'
@@ -230,6 +234,7 @@ export interface NexusGenFieldTypeNames {
     createExercise: 'Exercise'
   }
   Query: { // field return type name
+    categories: 'ExerciseCategory'
     exercises: 'Exercise'
     user: 'User'
   }
@@ -276,7 +281,6 @@ export interface NexusGenArgTypes {
     createExercise: { // args
       categoryId: string; // String!
       name: string; // String!
-      userId: string; // String!
     }
   }
   Query: {

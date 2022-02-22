@@ -15,14 +15,25 @@ const Query = queryType({
       },
     })
 
+    t.list.field("categories", {
+      type: "ExerciseCategory",
+      resolve: () => {
+        return prisma.exerciseCategory.findMany()
+      },
+    })
+
     t.list.field("exercises", {
       type: "Exercise",
       resolve: (_, _args, ctx) => {
         return prisma.user
           .findUnique({
-            where: { email: ctx.session.user.email},
+            where: { email: ctx.session.user.email },
           })
-          .exercises()
+          .exercises({
+            orderBy: {
+              id: "desc",
+            }
+          })
       },
     })
   },

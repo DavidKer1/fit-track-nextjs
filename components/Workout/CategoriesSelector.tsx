@@ -1,15 +1,9 @@
+import { CategoriesQuery } from "@/gql/queries.graphql"
+import { Category } from "@/types/Category"
 import { useQuery } from "@apollo/client"
-import { Button, Text, Container, Spacer } from "@nextui-org/react"
-import { AnimatePresence, motion } from "framer-motion"
-import { useSession } from "next-auth/react"
-import { useState } from "react"
-import type { NexusGenFieldTypes } from "../../generated/nexus-typegen"
-import { ExercisesQuery } from "../../gql/queries.graphql"
-type TProps = {
-  direction : "left" | "right"
-  onSelect: (id?: string) => void
-}
-
+import { Button, Spacer } from "@nextui-org/react"
+import { motion } from "framer-motion"
+import { NexusGenFieldTypes } from "generated/nexus-typegen"
 const variants = {
   enter: (direction: "left" | "right") => {
     return {
@@ -30,24 +24,30 @@ const variants = {
     }
   },
 }
-export default function ExerciseSelector(props: TProps) {
+type TProps = {
+  onSelect: (category: Category) => void
+  direction: "left" | "right"
+}
+export default function CategoriesSelector(props: TProps) {
   const { direction, onSelect } = props
   const { loading, error, data } = useQuery<{
-    exercises: NexusGenFieldTypes["Exercise"][]
-  }>(ExercisesQuery, {
+    categories: NexusGenFieldTypes["ExerciseCategory"][]
+  }>(CategoriesQuery, {
     fetchPolicy: "cache-and-network",
   })
   if (loading) {
     return null
   }
   if (error) {
-    return <div> Was an error requesting exercises, please try again later</div>
+    return (
+      <div> Was an error requesting categories, please try again later</div>
+    )
   }
 
   return (
     <motion.div
       variants={variants}
-      key="exercise-selector"
+      key="cateogory-selector"
       initial="enter"
       animate="center"
       exit="exit"
@@ -64,9 +64,15 @@ export default function ExerciseSelector(props: TProps) {
         opacity: { duration: 0.2 },
       }}
     >
-      {data?.exercises.map(exercise => (
+      {data?.categories.map(category => (
         <>
-          <Button key={exercise.id}>{exercise.name}</Button>
+          <Button
+            key={category.id}
+            onClick={() => onSelect(category)}
+            color="secondary"
+          >
+            {category.name}
+          </Button>
           <Spacer y={0.5} />
         </>
       ))}

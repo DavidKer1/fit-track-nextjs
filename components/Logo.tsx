@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <Link href="/">
       <a>
-        <Text color={"primary"} weight={"light"} h3 size={28}>
+        <Text color={"primary"} weight={"bold"} h3 size={28}>
           FitTrack.
         </Text>
       </a>

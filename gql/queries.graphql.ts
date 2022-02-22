@@ -11,3 +11,12 @@ export const ExercisesQuery = gql`
     }
   }
 `
+
+export const CategoriesQuery = gql`
+  query Categories {
+    categories {
+      name
+      id
+    }
+  }
+`

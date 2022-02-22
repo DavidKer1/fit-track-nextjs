@@ -1,9 +1,10 @@
 import { Button, Container, Row, Spacer, Text } from "@nextui-org/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { IoSave } from "react-icons/io5"
+import { signOut, useSession } from "next-auth/react"
 export default function NavButtons() {
   const router = useRouter()
+
   return (
     <Container fluid>
       <Row>
@@ -11,7 +12,12 @@ export default function NavButtons() {
           <Button
             rounded
             light={router.pathname !== "/"}
-            css={{ fontSize: 16, py: 24, fontWeight: "$semibold" , justifyContent: 'center' ,display: 'flex'}}
+            css={{
+              fontSize: 16,
+              py: 24,
+              fontWeight: router.pathname === "/" ? "$semibold" : "$normal",
+              color: router.pathname === "/" ? "$white" : "$primary",
+            }}
           >
             Dashboard
           </Button>
@@ -23,7 +29,13 @@ export default function NavButtons() {
           <Button
             rounded
             light={router.pathname !== "/workout"}
-            css={{ fontSize: 16, py: 24, fontWeight: "$semibold" }}
+            css={{
+              fontSize: 16,
+              py: 24,
+              fontWeight:
+                router.pathname === "/workout" ? "$semibold" : "$normal",
+              color: router.pathname === "/workout" ? "$white" : "$primary",
+            }}
           >
             Workout
           </Button>

@@ -27,6 +27,7 @@ model Exercise {
   id               String            @id @default(cuid())
   name             String
   categoryId       String?
+  createdAt        DateTime?          @default(now())
   category         ExerciseCategory?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   userId           String
   user             User              @relation(fields: [userId], references: [id], onDelete: SetDefault)

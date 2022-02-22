@@ -12,7 +12,7 @@ const Mutation = objectType({
       resolve: (_, { name }, ctx) => {
         return prisma.exerciseCategory.create({
           data: {
-            name: name,
+            name,
           },
         })
       },
@@ -21,11 +21,10 @@ const Mutation = objectType({
     t.field("createExercise", {
       type: "Exercise",
       args: {
-        userId: nonNull(stringArg()),
         name: nonNull(stringArg()),
         categoryId: nonNull(stringArg()),
       },
-      resolve: (_, { name, categoryId, userId }) => {
+      resolve: async (_, { name, categoryId },ctx) => {
         return prisma.exercise.create({
           data: {
             name: name,
@@ -36,7 +35,7 @@ const Mutation = objectType({
             },
             user: {
               connect: {
-                id: userId,
+                email: ctx.session.user.email || undefined,
               }
             }
           },

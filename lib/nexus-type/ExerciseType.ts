@@ -5,6 +5,7 @@ const Exercise = objectType({
   definition(t) {
     t.nonNull.string("id")
     t.nonNull.string("name")
+    t.nonNull.date("createdAt")
     t.field("category", {
       type: "ExerciseCategory",
       resolve: parent => {
